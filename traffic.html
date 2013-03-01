@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+#main{
+position:absolute;
+top:300px;
+left:220px;
+}
+#sub{
+position:absolute;
+top:410px;
+left:220px;
+}
+#print{
+position:absolute;
+top:300px;
+left:600px;
+}
+</style>
+<script src="jquery.js">
+</script>
+<script>
+var z=0;
+var element;
+$(document).ready(function(){
+
+		$("#typeofvehicle").change(function(){
+		element=$(this).val();
+		
+		});
+	$("#printticket").click(function(){
+		z=0;
+		$("input").each(function(a){
+		
+			var x =$(this).css("background-color");
+			var y="rgb(240, 240, 240)";
+			if(element=="two wheeler")
+			{
+				if(a>=0 && a<7 && z==0) 
+				{
+					if(x==y)
+					{
+						$(this).css("background-color","green");
+						z=1;
+					}
+				}
+			}
+			
+			if(element=="four wheeler")
+			{
+				if(a>=7 && a<14 && z==0) 
+				{
+					if(x==y)
+					{
+						$(this).css("background-color","blue");
+						z=1;
+					}
+				}
+			}
+                if(element=="others")
+			{
+				if(a>=14 && a<21 && z==0) 
+				{
+					if(x==y)
+					{
+						$(this).css("background-color","red");
+						z=1;
+					}
+				}
+			}
+
+		});
+		
+	});
+	});
+			
+</script>
+<title>
+TRAFFIC SIMULATION</title>
+</head>
+<body>
+<table border="1" id="main">
+<tr>
+<td class="twowheeler" style="background-color:green";/> 2 Wheeler</td>
+<td><input type="button" class="twowheeler" id="twowheel1"></td>
+<td><input type="button" class="twowheeler" id="twowheel2"></td>
+<td><input type="button" class="twowheeler" id="twowheel3"></td>
+<td><input type="button" class="twowheeler" id="twowheel4"></td>
+<td><input type="button" class="twowheeler" id="twowheel5"></td>
+<td><input type="button" class="twowheeler" id="twowheel6"></td>
+<td><input type="button" class="twowheeler" id="twowheel7"></td>
+</tr>
+<tr>
+<td class="fourwheeler" style="background-color:blue";>4 Wheeler</td>
+<td><input type="button" class="fourwheeler" id="fourwheel1"></td>
+<td><input type="button" class="fourwheeler" id="fourwheel2"></td>
+<td><input type="button" class="fourwheeler" id="fourwheel3"></td>
+<td><input type="button" class="fourwheeler" id="fourwheel4"></td>
+<td><input type="button" class="fourwheeler" id="fourwheel5"></td>
+<td><input type="button" class="fourwheeler" id="fourwheel6"></td>
+<td><input type="button" class="fourwheeler" id="fourwheel7"></td>
+</tr>
+<tr>
+<td class="others" style="background-color:red";>Others</td>
+<td><input type="button" class="others" id="others1"></td>
+<td><input type="button" class="others" id="others2"></td>
+<td><input type="button" class="others" id="others3"></td>
+<td><input type="button" class="others" id="others4"></td>
+<td><input type="button" class="others" id="others5"></td>
+<td><input type="button" class="others" id="others6"></td>
+<td><input type="button" class="others" id="others7"></td>
+</tr>
+</table>
+<table id="sub">
+<tr>
+<td style="background-color:green;width:20px;height:20px;"></td>
+<td>2 wheelers</td>
+<td style="background-color:blue;width:20px;height:20px;"></td>
+<td>4 wheelers</td>
+<td style="background-color:red;width:20px;height:20px;"></td>
+<td>others</td>
+
+</tr>
+</table>
+<table id="print">
+<tr>
+<td><select id="typeofvehicle">
+<option value="type of vehicle">Type of Vehicle</option>
+<option value="two wheeler">Two Wheeler</option>
+<option value="four wheeler">Four Wheeler</option>
+<option value="others">Others</option></td>
+<td><input type="button" value="PRINT TICKET" id="printticket"></td>
+</tr>
+</table>

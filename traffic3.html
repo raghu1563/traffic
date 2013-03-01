@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<style type=text/css>
+</style>
+<script src="jquery.js" ></script>
+<script src="angualr.js"></script>
+<title>TRAFFIC SIMULATION</title>
+<script>
+function ctrl($scope){
+               $scope.twowheelers=[];
+               $scope.fourwheelers=[];
+               $scope.others=[];
+$scope.unpark=function(x){
+
+$("#"+x).css("background-color","rgb(240, 240, 240)");
+};
+$scope.click=function(){
+                 var x=$("#no_of_two_wheel").val();
+                            for(var i=0;i<x;i++)
+                            {
+                                 $scope.twowheelers.push({});
+                                 $scope.twowheelers[i].slotno="A"+parseInt(i+1);
+                            }
+                       }
+$scope.click1=function(){
+                 var x=$("#no_of_four_wheel").val();
+                 
+                         for(var i=0;i<x;i++)
+                            {
+                                  $scope.fourwheelers.push({});
+                                  $scope.fourwheelers[i].slotno="B"+parseInt(i+1);
+                            }
+                        }
+$scope.click2=function(){
+                 var x=$("#no_of_heavy_vehicle").val();
+                 
+                            for(var i=0;i<x;i++)
+                               {
+                                      $scope.others.push({});
+                                      $scope.others[i].slotno="C"+parseInt(i+1);
+                               }
+                        }
+
+
+var z=0;
+var type_of_vehicle;
+$(document).ready(function(){
+
+		$("#typeofvehicle").change(function(){
+		type_of_vehicle=$(this).val();
+		});
+	$("#printticket").click(function(){
+		z=0;
+		$("button").each(function(a){
+		    var col=$("#no_of_two_wheel").val();
+		    var col1=$("#no_of_four_wheel").val();
+			var col3=parseInt(col)+parseInt(col1);
+		    var col2=$("#no_of_heavy_vehicle").val();
+			var col4=parseInt(col3)+parseInt(col2)+parseInt(1);
+			var x =$(this).css("background-color");
+			var y="rgb(240, 240, 240)";
+			if(type_of_vehicle=="two wheeler")
+			{
+				if(a>=0 && a<col && z==0) 
+				{
+					if(x==y)
+					{
+						$(this).css("background-color","lime");
+						twowheelerintime=new Date();
+					    $scope.twowheelers[a].intime=twowheelerintime.getHours()+":"+twowheelerintime.getMinutes()+":"+twowheelerintime.getSeconds();
+					
+      					$("#timein").text($scope.twowheelers[a].intime);
+						z=1;
+					}
+				}
+			}
+			
+			
+			if(type_of_vehicle=="four wheeler")
+			{
+	
+				if(a>=col && a<col3 && z==0) 
+				{
+					
+					if(x==y)
+					{
+						$(this).css("background-color","yellow");
+						fourwheelerintime=new Date();
+					    $scope.fourwheelers[a-col].intime=fourwheelerintime.getHours()+":"+fourwheelerintime.getMinutes()+":"+fourwheelerintime.getSeconds();
+					
+      					$("#timein").text($scope.fourwheelers[a-col].intime);
+						z=1;
+					}
+				}
+				
+			}
+			
+            if(type_of_vehicle=="others")
+			{	
+				if(a>=col3 && a<col4 && z==0) 
+				{
+			
+					if(x==y)
+					{
+						$(this).css("background-color","red");
+						heavyvehiclesintime=new Date();
+					    $scope.others[a-col3].intime=heavyvehiclesintime.getHours()+":"+heavyvehiclesintime.getMinutes()+":"+heavyvehiclesintime.getSeconds();
+					
+      					$("#timein").text($scope.others[a-col3].intime);
+						z=1;
+					}
+				}
+			}
+
+		});
+		
+	});
+	});
+	var zz=0;
+var element1;
+				$("#typeofvehicle1").change(function(){
+							element1=$(this).val();
+		
+				});
+					$("#collectticket").click(function(){
+						zz=0;
+							$("button").each(function(a){
+							var col=$("#no_of_two_wheel").val();
+							var col1=$("#no_of_four_wheel").val();
+							var col3=parseInt(col)+parseInt(col1);
+							var col2=$("#no_of_heavy_vehicle").val();
+							var col4=parseInt(col3)+parseInt(col2)+parseInt(1);
+								if(element1=="two wheeler")
+									{
+										if(a>=0 && a<col && zz==0) 
+											{var x =$(this).css("background-color");
+												if(x=="rgb(0, 255, 0)")
+													{
+														$(this).css("background-color","rgb(240, 240, 240)");
+														twowheelersouttime=new Date();
+														$scope.twowheelers[a].outtime=twowheelersouttime.getHours()+":"+twowheelersouttime.getMinutes()+":"+twowheelersouttime.getSeconds();
+														$("#timeout").text($scope.twowheelers[a].outtime);
+														$("#timein1").text($scope.twowheelers[a].intime);
+														zz=1;
+													}
+											}
+									}
+			
+			
+								if(element1=="four wheeler")
+									{
+										if(a>=col && a<col3 && zz==0) 
+											{
+												var x=$(this).css("background-color");
+													if(x=="rgb(255, 255, 0)")
+														{
+															$(this).css("background-color","rgb(240, 240, 240)");
+															fourwheelersouttime=new Date();
+															$scope.fourwheelers[a-col].outtime=fourwheelersouttime.getHours()+":"+fourwheelersouttime.getMinutes()+":"+fourwheelersouttime.getSeconds();
+															$("#timeout").text($scope.fourwheelers[a-col].outtime);
+															$("#timein1").text($scope.fourwheelers[a-col].intime);
+															zz=1;
+														}
+											}
+									}
+			
+								if(element1=="others")
+									{	
+										if(a>=col3 && a<col4 && zz==0) 
+											{
+												var x=$(this).css("background-color");
+										if(x=="rgb(255, 0, 0)")
+												{
+													$(this).css("background-color","rgb(240, 240, 240)");
+													heavyvehiclesouttime=new Date();
+													$scope.others[a-col3].outtime=heavyvehiclesouttime.getHours()+":"+heavyvehiclesouttime.getMinutes()+":"+heavyvehiclesouttime.getSeconds();
+													$("#timeout").text($scope.others[a-col3].outtime);
+													$("#timein1").text($scope.others[a-col3].intime);
+													zz=1;
+												}
+											}
+									}
+
+			});
+		
+	});
+
+}
+</script>
+</head>
+<body>	
+	<div ng-controller="ctrl">
+		<table>
+			<tr>
+				<td>
+					Enter no.of slots for 2 Wheeler</td><td><input type="textbox" ng-model="text1" id="no_of_two_wheel"/>
+				</td>
+				<td><input type="button" value="submit" id="submit" ng-click="click()"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Enter no.of slots for 4 Wheeler</td><td><input type="textbox" ng-model="text2" id="no_of_four_wheel"/>
+				</td>
+				<td><input type="button" value="submit" id="submit" ng-click="click1()"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Enter no.of slots for Heavy Vehicles</td><td><input type="textbox" ng-model="text3" id="no_of_heavy_vehicle"/>
+				</td>
+				<td><input type="button" value="submit" id="submit" ng-click="click2()"/>
+				</td>
+			</tr>
+</table>
+<table>
+	<tr>
+		<td class="others" style="background-color:lime";>Two Wheelers</td>
+		<td ng-repeat="twowheeler in twowheelers"><button id="twowheeler.name"> {{twowheeler.slotno}}</button></td>
+	</tr>
+	<tr>
+		<td class="others" style="background-color:yellow";>Four Wheeler</td>
+		<td ng-repeat="fourwheeler in fourwheelers"><button id="fourwheeler.name"> {{fourwheeler.slotno}}</button></td>
+	</tr>
+	<tr>
+		<td class="others" style="background-color:red";>Heavy Vehicles</td>
+		<td ng-repeat="other in others" ><button id="{{other.slotno}}" ng-click="unpark(heavyvehicle)" data-ng-init="heavyvehicle=other.slotno"> {{other.slotno}}</button></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td><select id="typeofvehicle"/>
+			<option value="type of vehicle">Type of Vehicle</option>
+			<option value="two wheeler">Two Wheeler</option>
+			<option value="four wheeler">Four Wheeler</option>
+			<option value="others">Heavy Vehicles</option></select>
+		</td>
+		<td><input type="button" value="PRINT TICKET" id="printticket"></td>
+		<td>In Time:</td>
+		<td><span id="timein"></span></td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<td><select id="typeofvehicle1"/>
+			<option value="type of vehicle">Type of Vehicle</option>
+			<option value="two wheeler">Two Wheeler</option>
+			<option value="four wheeler">Four Wheeler</option>
+			<option value="others">Heavy Vehicles</option></select>
+		</td>
+		<td><input type="button" value="COLLECT TICKET" id="collectticket"></td>
+		<td>In Time:</td>
+		<td><span id="timein1"></span></td>
+		<td>Out Time:</td>
+		<td><span id="timeout"></span></td>
+	</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<style type=text/css></style>
+<script src="jquery.js" ></script>
+<script src="angualr.js"></script>
+<title>TRAFFIC SIMULATION</title>
+<script>
+var x;
+var outtime;
+var intime1;
+function ctrl($scope){
+$scope.twowheelers=[{slotno:'a1'},{intime:'10'}];
+$scope.fourwheelers=[{slotno:'b1'}];
+$scope.others=[{slotno:'c1'}];
+$scope.click=function(){
+x=$("#textbox").val();
+var i;
+for(i=1;i<=x;i++)
+{
+$scope.twowheelers.push({});
+$scope.twowheelers[i].slotno="a"+parseInt(i+1);
+$scope.twowheelers[i].intime="";
+
+}
+}
+$scope.click1=function(){
+x=$("#textbox1").val();
+var i;
+for(i=1;i<=x;i++)
+{
+$scope.fourwheelers.push({});
+$scope.fourwheelers[i].slotno="";
+}
+}
+$scope.click2=function(){
+x=$("#textbox2").val();
+var i;
+for(i=1;i<=x;i++)
+{
+$scope.others.push({});
+$scope.others[i].slotno="";
+}
+}
+
+}
+var z=0;
+var element;
+$(document).ready(function(){
+
+		$("#typeofvehicle").change(function(){
+		element=$(this).val();
+		});
+	$("#printticket").click(function(){
+		z=0;
+		$("button").each(function(a){
+		    var col=$("#textbox").val();
+		    var col1=$("#textbox1").val();
+			var col3=parseInt(col)+parseInt(col1)+parseInt(1);
+		    var col2=$("#textbox2").val();
+			var col4=parseInt(col3)+parseInt(col2)+parseInt(1);
+			var col5=parseInt(col3)+parseInt(1)
+			var x =$(this).css("background-color");
+			var y="rgb(240, 240, 240)";
+			if(element=="two wheeler")
+			{
+				if(a>=0 && a<=col && z==0) 
+				{
+					if(x==y)
+					{
+						$(this).css("background-color","lime");
+						intime1=new Date();
+						//alert(intime1.getHours());
+						$scope.twowheelers[a+1].intime=intime1.getHours()+":"+intime1.getMinutes()+":"+intime1.getSeconds();
+						alert("assa"+$scope.twowheelers[a+1].intime);
+						//$("#timein").text("Hello");
+						z=1;
+					}
+				}
+			}
+			
+			
+			if(element=="four wheeler")
+			{
+	
+				if(a>col && a<=col3 && z==0) 
+				{
+					
+					if(x==y)
+					{
+						$(this).css("background-color","yellow");
+						z=1;
+					}
+				}
+			}
+			
+            if(element=="others")
+			{	
+				if(a>=col5 && a<=col4 && z==0) 
+				{
+			
+					if(x==y)
+					{
+						$(this).css("background-color","red");
+						z=1;
+					}
+				}
+			}
+
+		});
+		
+	});
+	});
+
+
+</script>
+</head>
+<body>
+<div ng-controller="ctrl">
+<table>
+<tr>
+<td>
+Enter no.of slots for 2 Wheeler</td><td><input type="textbox" ng-model="text1" id="textbox"/></td>
+<td><input type="button" value="submit" id="submit" ng-click="click()"/></td></tr>
+<tr>
+<td>
+Enter no.of slots for 4 Wheeler</td><td><input type="textbox" ng-model="text2" id="textbox1"/></td>
+<td><input type="button" value="submit" id="submit" ng-click="click1()"/></td></tr>
+<tr>
+<td>
+Enter no.of slots for Heavy Vehicles</td><td><input type="textbox" ng-model="text3" id="textbox2"/></td>
+<td><input type="button" value="submit" id="submit" ng-click="click2()"/></td></tr>
+</table>
+<table>
+<tr>
+<td class="others" style="background-color:lime";>Two Wheelers</td>
+<td ng-repeat="twowheeler in twowheelers"><button id="twowheeler.name"> {{twowheeler.slotno}}</button></td>
+</tr>
+<tr>
+<td class="others" style="background-color:yellow";>Four Wheeler</td>
+<td ng-repeat="fourwheeler in fourwheelers"><button id="fourwheeler.name"> {{fourwheeler.name}}</button></td>
+</tr>
+<tr>
+<td class="others" style="background-color:red";>Heavy Vehicles</td>
+<td ng-repeat="other in others"><button id="others.name"> {{others.name}}</button></td></tr>
+</table>
+<table>
+<tr>
+<td><select id="typeofvehicle"/>
+<option value="type of vehicle">Type of Vehicle</option>
+<option value="two wheeler">Two Wheeler</option>
+<option value="four wheeler">Four Wheeler</option>
+<option value="others">Heavy Vehicles</option></select>
+</td>
+<td><input type="button" value="PRINT TICKET" id="printticket"></td></tr></table>
+
+</div>
+<div id="infi">
+<table>
+<tr>
+<td> Information</td></tr>
+<tr>
+<td><span id="timein"></span></td>
+<td>In Time:</td></tr>
+</table>
+</div>
+</body>
+
+</html>
